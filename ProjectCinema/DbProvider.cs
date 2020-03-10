@@ -12,7 +12,7 @@ namespace ProjectCinema
     class DbProvider
     {
         string connectionString;
-        protected SqlConnection connection;
+        public SqlConnection connection;
 
         public DbProvider()
         {

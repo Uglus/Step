@@ -11,13 +11,13 @@ namespace ProjectCinema
 {
     class DataManager : DbProvider
     {
-        List<Category> categories;
-        List<AgeRestriction> ageRestrictions;
-        List<Film> films;
-        List<Hall> halls;
-        List<Session> sessions;
-        List<Place> places;
-        List<Ticket> tickets;
+        public List<Category> categories;
+        public List<AgeRestriction> ageRestrictions;
+        public List<Film> films;
+        public List<Hall> halls;
+        public List<Session> sessions;
+        public List<Place> places;
+        public List<Ticket> tickets;
 
         public DataManager()
         {
@@ -28,6 +28,7 @@ namespace ProjectCinema
             sessions = new List<Session>();
             places = new List<Place>();
             tickets = new List<Ticket>();
+            LoadData();
         }
 
         public void LoadData()
@@ -53,6 +54,8 @@ namespace ProjectCinema
                     );
                 categories.Add(c);
             }
+            connection.Close();
+            connection.Open();
 
             //AgeRestriction
             cmd = new SqlCommand(queryaAgeRestriction, connection);
@@ -64,7 +67,8 @@ namespace ProjectCinema
                     );
                 ageRestrictions.Add(ar);
             }
-
+            connection.Close();
+            connection.Open();
             //queryFilm
             cmd = new SqlCommand(queryFilm, connection);
             reader = cmd.ExecuteReader();
@@ -77,7 +81,8 @@ namespace ProjectCinema
                     );
                 films.Add(f);
             }
-
+            connection.Close();
+            connection.Open();
             //queryHall
             cmd = new SqlCommand(queryHall, connection);
             reader = cmd.ExecuteReader();
@@ -88,7 +93,8 @@ namespace ProjectCinema
                     );
                 halls.Add(h);
             }
-
+            connection.Close();
+            connection.Open();
             //querySession
             cmd = new SqlCommand(querySession, connection);
             reader = cmd.ExecuteReader();
@@ -101,7 +107,8 @@ namespace ProjectCinema
                     );
                 sessions.Add(s);
             }
-
+            connection.Close();
+            connection.Open();
             //queryPlace
             cmd = new SqlCommand(queryPlace, connection);
             reader = cmd.ExecuteReader();
@@ -113,7 +120,8 @@ namespace ProjectCinema
                     );
                 places.Add(p);
             }
-
+            connection.Close();
+            connection.Open();
             //queryTicket
             cmd = new SqlCommand(queryTicket, connection);
             reader = cmd.ExecuteReader();
