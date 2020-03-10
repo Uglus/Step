@@ -7,14 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using ProjectCinema.Models;
 
 namespace ProjectCinema
 {
     public partial class formLogin : Form
     {
+         List<User> users;
+
         public formLogin()
         {
             InitializeComponent();
+           
+            
         }
+
+
+        //Clear
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            
+        }
+
+
+        //Enter
+        private void button1_Click(object sender, EventArgs e)
+        {
+            users = new List<User>();
+            //if (textBox1.Text == users.)
+        }
+
+
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data.SqlClient;
 using System.Data;
+using ProjectCinema.Models;
 
 namespace ProjectCinema
 {
@@ -19,6 +20,8 @@ namespace ProjectCinema
         List<Place> places;
         List<Ticket> tickets;
 
+
+
         public DataManager()
         {
             categories = new List<Category>();
@@ -28,6 +31,7 @@ namespace ProjectCinema
             sessions = new List<Session>();
             places = new List<Place>();
             tickets = new List<Ticket>();
+
         }
 
         public void LoadData()
