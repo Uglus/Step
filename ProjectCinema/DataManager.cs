@@ -11,13 +11,13 @@ namespace ProjectCinema
 {
     class DataManager : DbProvider
     {
-        List<Category> categories;
-        List<AgeRestriction> ageRestrictions;
-        List<Film> films;
-        List<Hall> halls;
-        List<Session> sessions;
-        List<Place> places;
-        List<Ticket> tickets;
+        public List<Category> categories;
+        public List<AgeRestriction> ageRestrictions;
+        public List<Film> films;
+        public List<Hall> halls;
+        public List<Session> sessions;
+        public List<Place> places;
+        public List<Ticket> tickets;
 
         public DataManager()
         {
@@ -28,6 +28,7 @@ namespace ProjectCinema
             sessions = new List<Session>();
             places = new List<Place>();
             tickets = new List<Ticket>();
+            LoadData();
         }
 
         public void LoadData()
@@ -53,8 +54,9 @@ namespace ProjectCinema
                     );
                 categories.Add(c);
             }
-
+            connection.Close();
             //AgeRestriction
+            connection.Open();
             cmd = new SqlCommand(queryaAgeRestriction, connection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -64,8 +66,9 @@ namespace ProjectCinema
                     );
                 ageRestrictions.Add(ar);
             }
-
+            connection.Close();
             //queryFilm
+            connection.Open();
             cmd = new SqlCommand(queryFilm, connection);
             reader = cmd.ExecuteReader();
             while(reader.Read())
@@ -77,8 +80,9 @@ namespace ProjectCinema
                     );
                 films.Add(f);
             }
-
+            connection.Close();
             //queryHall
+            connection.Open();
             cmd = new SqlCommand(queryHall, connection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -88,8 +92,9 @@ namespace ProjectCinema
                     );
                 halls.Add(h);
             }
-
+            connection.Close();
             //querySession
+            connection.Open();
             cmd = new SqlCommand(querySession, connection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -101,8 +106,9 @@ namespace ProjectCinema
                     );
                 sessions.Add(s);
             }
-
+            connection.Close();
             //queryPlace
+            connection.Open();
             cmd = new SqlCommand(queryPlace, connection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -113,8 +119,9 @@ namespace ProjectCinema
                     );
                 places.Add(p);
             }
-
+            connection.Close();
             //queryTicket
+            connection.Open();
             cmd = new SqlCommand(queryTicket, connection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -129,6 +136,49 @@ namespace ProjectCinema
 
             connection.Close();
         }
+
+
+        /// <summary>
+        /// добавления фильма (Игорь)
+        /// </summary>
+        public void AddFilm(Film f)
+        {
+            string query = "insert into Films (Name, CategoryId, AgeId) values (@Name, @CategoryId,@AgeId) ";
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = f.Name;
+            cmd.Parameters.Add("@CategoryId", SqlDbType.Int, 10).Value = f.CategoryId;
+            cmd.Parameters.Add("@AgeId", SqlDbType.Int, 10).Value = f.AgeId;
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            films.Add(f);
+        }
+
+        /// <summary>
+        /// Удаление фильма (Игорь)
+        /// </summary>
+        public void DelFilm(string name)
+        {
+            int t = 0;
+            int k = 0;
+            foreach (var f in films)
+            {
+                if (f.Name == name)
+                {
+                    k = t;
+                }
+                t++;
+            }
+
+            string query = "DELETE FROM Films WHERE Name = name";
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            films.RemoveAt(k);
+            Console.WriteLine("Фильм успешно удален");
+        }
+
 
 
     }
